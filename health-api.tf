@@ -37,6 +37,7 @@ module "health_api" {
   }
 
   deployment_controller = "CODE_DEPLOY"
+  codedeploy_strategy   = "CodeDeployDefault.ECSLinear10PercentEvery1Minutes"
 
   service_launch_type = [
     {

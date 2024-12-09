@@ -14,6 +14,14 @@ resource "aws_iam_role" "main" {
       },
     ]
   })
+
+  lifecycle {
+    create_before_destroy = true
+    ignore_changes = [
+      unique_id,
+      arn,
+    ]
+  }
 }
 
 resource "aws_iam_role_policy" "ecs_task_execution_policy" {
