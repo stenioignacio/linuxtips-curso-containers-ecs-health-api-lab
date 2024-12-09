@@ -34,6 +34,7 @@ resource "aws_iam_role_policy" "ecs_task_execution_policy" {
           "ecr:BatchGetImage",
           "s3:GetObject",
           "sqs:*",
+          "execute-api:Invoke"
         ],
         Resource = "*",
         Effect   = "Allow"

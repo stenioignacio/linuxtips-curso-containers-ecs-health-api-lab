@@ -1,6 +1,6 @@
 module "health_api" {
   # source = "github.com/msfidelis/linuxtips-curso-containers-ecs-service-module?ref=v1.3.1"
-  source       = "/Users/matheus/Workspace/linuxtips/linuxtips-curso-containers-ecs-service-module"
+  source       = "C:\\Users\\signacio\\OneDrive - JACTO\\Cloud-DevOps\\DevOps\\Arquitetura de containers - LinuxTips\\linuxtips-arquitetura-de-containers-ecs-service-module"
   region       = var.region
   cluster_name = var.cluster_name
 
@@ -16,13 +16,13 @@ module "health_api" {
   container_image = "fidelissauro/health-api:latest"
 
   // Service Connect
-  use_service_connect  = false
-  service_protocol     = "http"
-  service_connect_name = data.aws_ssm_parameter.service_connect_name.value
-  service_connect_arn  = data.aws_ssm_parameter.service_connect_arn.value
+  # use_service_connect  = false
+  # service_protocol     = "http"
+  # service_connect_name = data.aws_ssm_parameter.service_connect_name.value
+  # service_connect_arn  = data.aws_ssm_parameter.service_connect_arn.value
 
   service_listener = data.aws_ssm_parameter.listener_internal.value
-  alb_arn          = data.aws_ssm_parameter.alb_internal.value
+  ssm_alb_arn      = data.aws_ssm_parameter.alb_internal.value
 
   service_task_execution_role = aws_iam_role.main.arn
 
@@ -36,6 +36,8 @@ module "health_api" {
     port                = 8080
   }
 
+  deployment_controller = "CODE_DEPLOY"
+
   service_launch_type = [
     {
       capacity_provider = "FARGATE_SPOT"
@@ -43,7 +45,7 @@ module "health_api" {
     }
   ]
 
-  deployment_controller = "CODE_DEPLOY"
+  # deployment_controller = "CODE_DEPLOY"
 
   # codedeploy_strategy = "CodeDeployDefault.ECSLinear10PercentEvery1Minutes"
 
@@ -54,29 +56,29 @@ module "health_api" {
 
   service_discovery_namespace = data.aws_ssm_parameter.service_discovery_namespace.value
 
-  environment_variables = [
-    {
-      name  = "ZIPKIN_COLLECTOR_ENDPOINT"
-      value = "http://jaeger-collector.linuxtips-ecs-cluster.discovery.com:80"
-    },
-    {
-      name  = "BMR_SERVICE_ENDPOINT",
-      value = "nutrition-bmr.linuxtips-ecs-cluster.discovery.com:30000"
-    },
-    {
-      name  = "IMC_SERVICE_ENDPOINT",
-      value = "nutrition-imc.linuxtips-ecs-cluster.discovery.com:30000"
-    },
-    {
-      name  = "RECOMMENDATIONS_SERVICE_ENDPOINT",
-      value = "nutrition-recommendations.linuxtips-ecs-cluster.discovery.com:30000"
-    },
-    {
-      name  = "version"
-      value = timestamp()
-    }
+  # environment_variables = [
+  #   {
+  #     name  = "ZIPKIN_COLLECTOR_ENDPOINT"
+  #     value = "http://jaeger-collector.linuxtips-ecs-cluster.discovery.com:80"
+  #   },
+  #   {
+  #     name  = "BMR_SERVICE_ENDPOINT",
+  #     value = "nutrition-bmr.linuxtips-ecs-cluster.discovery.com:30000"
+  #   },
+  #   {
+  #     name  = "IMC_SERVICE_ENDPOINT",
+  #     value = "nutrition-imc.linuxtips-ecs-cluster.discovery.com:30000"
+  #   },
+  #   {
+  #     name  = "RECOMMENDATIONS_SERVICE_ENDPOINT",
+  #     value = "nutrition-recommendations.linuxtips-ecs-cluster.discovery.com:30000"
+  #   },
+  #   {
+  #     name  = "version"
+  #     value = timestamp()
+  #   }
 
-  ]
+  # ]
 
   vpc_id = data.aws_ssm_parameter.vpc.value
 

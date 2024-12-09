@@ -10,6 +10,10 @@ data "aws_ssm_parameter" "listener" {
   name = var.ssm_listener
 }
 
+data "aws_ssm_parameter" "alb_arn" {
+  name = var.ssm_alb_arn
+}
+
 data "aws_ssm_parameter" "alb_internal" {
   name = var.ssm_alb_internal
 }

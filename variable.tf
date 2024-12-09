@@ -1,5 +1,5 @@
 variable "cluster_name" {
-  default = "linuxtips-ecs-cluster"
+  default = "ecs-cluster-arquitetura-de-containers-aws"
 }
 
 variable "region" {
@@ -8,6 +8,10 @@ variable "region" {
 
 variable "ssm_alb" {
   default = "/linuxtips/ecs/lb/id"
+}
+
+variable "ssm_alb_arn" {
+  default = "/linuxtips/ecs/lb/arn"
 }
 
 variable "ssm_listener" {
@@ -23,19 +27,19 @@ variable "ssm_listener_internal" {
 }
 
 variable "ssm_vpc_id" {
-  default = "/linuxtips-vpc/vpc/vpc_id"
+  default = "/linuxtips-vpc/vpc/vpc-id"
 }
 
 variable "ssm_private_subnet_1" {
-  default = "/linuxtips-vpc/vpc/subnet_private_1a"
+  default = "/linuxtips-vpc/vpc/subnet-private-1a"
 }
 
 variable "ssm_private_subnet_2" {
-  default = "/linuxtips-vpc/vpc/subnet_private_1b"
+  default = "/linuxtips-vpc/vpc/subnet-private-1b"
 }
 
 variable "ssm_private_subnet_3" {
-  default = "/linuxtips-vpc/vpc/subnet_private_1c"
+  default = "/linuxtips-vpc/vpc/subnet-private-1c"
 }
 
 variable "ssm_service_discovery_namespace" {
@@ -48,4 +52,8 @@ variable "ssm_service_connect_arn" {
 
 variable "ssm_service_connect_name" {
   default = "/linuxtips/ecs/service-connect/name"
+}
+
+variable "ssm-listener" {
+  default = "/linuxtips/ecs/lb/internal/listener"
 }

@@ -1,6 +1,6 @@
 module "bmr" {
   # source = "github.com/msfidelis/linuxtips-curso-containers-ecs-service-module?ref=v1.3.1"
-  source       = "/Users/matheus/Workspace/linuxtips/linuxtips-curso-containers-ecs-service-module"
+  source       = "C:\\Users\\signacio\\OneDrive - JACTO\\Cloud-DevOps\\DevOps\\Arquitetura de containers - LinuxTips\\linuxtips-arquitetura-de-containers-ecs-service-module"
   region       = var.region
   cluster_name = var.cluster_name
 
@@ -8,7 +8,7 @@ module "bmr" {
   service_port   = "30000"
   service_cpu    = 256
   service_memory = 512
-
+  service_listener   = data.aws_ssm_parameter.listener.name
   task_minimum       = 1
   task_maximum       = 3
   service_task_count = 1
@@ -16,12 +16,12 @@ module "bmr" {
   container_image = "fidelissauro/bmr-grpc-service:latest"
 
   // Service Connect
-  use_service_connect  = true
-  service_protocol     = "grpc"
-  service_connect_name = data.aws_ssm_parameter.service_connect_name.value
-  service_connect_arn  = data.aws_ssm_parameter.service_connect_arn.value
+  # use_service_connect  = true
+  # service_protocol     = "grpc"
+  # service_connect_name = data.aws_ssm_parameter.service_connect_name.value
+  # service_connect_arn  = data.aws_ssm_parameter.service_connect_arn.value
 
-  use_lb = false
+  # use_lb = false
 
   service_task_execution_role = aws_iam_role.main.arn
 
@@ -34,6 +34,9 @@ module "bmr" {
     path                = "/healthz"
     port                = 8080
   }
+
+  deployment_controller = "CODE_DEPLOY"
+
 
   service_launch_type = [
     {
@@ -48,12 +51,12 @@ module "bmr" {
     "bmr.linuxtips-ecs-cluster.internal.com"
   ]
 
-  environment_variables = [
-    {
-      name  = "ZIPKIN_COLLECTOR_ENDPOINT"
-      value = "http://jaeger-collector.linuxtips-ecs-cluster.internal.com:80"
-    }
-  ]
+  # environment_variables = [
+  #   {
+  #     name  = "ZIPKIN_COLLECTOR_ENDPOINT"
+  #     value = "http://jaeger-collector.linuxtips-ecs-cluster.internal.com:80"
+  #   }
+  # ]
 
   vpc_id = data.aws_ssm_parameter.vpc.value
 
